@@ -1,4 +1,4 @@
-ARG GO_VERSION=1.13.4
+ARG GO_VERSION=1.19
 
 FROM golang:${GO_VERSION}-alpine AS builder
 
@@ -13,7 +13,7 @@ RUN go mod download
 COPY ../main.go .
 RUN go build -o ./app ./main.go
 
-FROM golang:1.13.4-alpine
+FROM golang:1.19.4-alpine
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
