@@ -22,7 +22,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.18.0'
+          go-version: '1.19.0'
 
       - name: Grant access to private modules
         run: git config --global url."https://${{ secrets.GO_MODULE_TOKEN }}:x-oauth-basic@github.com/cryptotradev".insteadOf "https://github.com/cryptotradev"
