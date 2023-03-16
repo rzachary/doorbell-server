@@ -1,0 +1,25 @@
+#!/bin/sh
+COVERAGE_THRESHOLD=84
+
+#COVERAGE=$(sh ./coverage/coverage | grep total | awk '{print $3}' | awk -F'.' '{print $1}')
+COVERAGE=$(make run-coverage-container | grep total | awk '{print $5}' | awk -F'.' '{print $1}')
+
+echo "$COVERAGE"
+if [[ $COVERAGE = "" ]]; then
+    tput setaf 1; #red color text
+    echo "couldn't calculate coverage"
+    echo "please check if your tests are failing"
+    exit 1
+fi
+
+if [[ $COVERAGE -ge $COVERAGE_THRESHOLD ]]; then
+    echo "coverage: OK"
+    exit 0
+fi
+
+tput setaf 1; #red color text
+echo "commit is not clean"
+echo "coverage threshold not maintained: $COVERAGE%"
+exit 1
+
+make run-test

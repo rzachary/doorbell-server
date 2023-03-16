@@ -1,0 +1,50 @@
+#!/bin/bash
+
+checkLinting() {
+  echo "=== LINT CHECK START ==="
+  checkIfInstalled golangci-lint
+
+  lintIssues=$(golangci-lint run ./... | grep ".go")
+
+  if [[ -n "$lintIssues" ]]; then
+    echo "============ LINT CHECK FAILED ==========="
+    echo "$lintIssues"
+    echo "=========================================="
+    exit 1
+  fi
+
+  echo "=== LINT CHECK PASSED ==="
+}
+
+checkFormatting() {
+  echo "=== FMT CHECK START ==="
+  checkIfInstalled gofmt
+
+  unFormatted=$(gofmt -l ./..)
+  if [ -n "$unFormatted" ]; then
+    echo "============ FMT CHECK FAILED ==========="
+    echo "Following files are not properly formatted: "
+    for fn in $unFormatted; do
+        echo "$fn"
+    done
+    echo "========================================"
+    exit 1
+  fi
+  echo "=== FMT CHECK PASSED ==="
+}
+
+checkIfInstalled() {
+  if ! command -v "$1" &> /dev/null
+  then
+      echo "$1 could not be found, try installing $1!"
+      exit 1
+  fi
+}
+
+checkLinting
+checkFormatting
+
+echo "======================================"
+echo "Yayy! Your Commit is clean. Go Ahead!"
+echo "======================================"
+exit 0
