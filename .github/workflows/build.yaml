@@ -27,11 +27,11 @@ jobs:
       - name: Grant access to private modules
         run: git config --global url."https://${{ secrets.GO_MODULE_TOKEN }}:x-oauth-basic@github.com/cryptotradev".insteadOf "https://github.com/cryptotradev"
 
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v2
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3.4.0
         with:
           # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
-          version: v1.47.2
+          version: v1.50.0
 
         # Run build of the application
       - name: Run build
