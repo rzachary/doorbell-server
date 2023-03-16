@@ -48,12 +48,12 @@ build:
 #
 #	Docker
 #
-.PHONY: build/builder_image
+.PHONY: build_image
 
 # Builder docker image; build/builder_image contains the id of the image
-build/builder_image:
+build_image:
 	mkdir -p build
-	docker build --platform linux/amd64 -f docker/dockerfile -t builder -q . | tee $@
+	docker build --tag gcr.io/eco-muse-358910/doorbell-server-0.0.1 -f docker/Dockerfile .
 
 
 lint:
