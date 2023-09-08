@@ -13,7 +13,7 @@ RUN go mod download
 COPY ../main.go .
 RUN go build -o ./app ./main.go
 
-FROM golang:1.19.6-alpine
+FROM golang:1.21.0-alpine
 
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 
